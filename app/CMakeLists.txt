@@ -1,0 +1,189 @@
+
+cmake_minimum_required(VERSION 3.4.1)
+
+
+add_library(
+             native-lib
+
+             SHARED
+
+             src/main/cpp/native-lib.cpp )
+set(GUETZLI_ROOT
+        src/main/cpp/guetzli
+)
+include_directories(AFTER
+        ${GUETZLI_ROOT}
+        ${GUETZLI_ROOT}/third_party/butteraugli
+)
+
+set(GUETZLI_SRC
+	${GUETZLI_ROOT}/guetzli/butteraugli_comparator.cc
+	${GUETZLI_ROOT}/guetzli/dct_double.cc
+	${GUETZLI_ROOT}/guetzli/debug_print.cc
+	${GUETZLI_ROOT}/guetzli/entropy_encode.cc
+	${GUETZLI_ROOT}/guetzli/fdct.cc
+	${GUETZLI_ROOT}/guetzli/gamma_correct.cc
+	${GUETZLI_ROOT}/guetzli/guetzli.cc
+	${GUETZLI_ROOT}/guetzli/idct.cc
+	${GUETZLI_ROOT}/guetzli/jpeg_data.cc
+	${GUETZLI_ROOT}/guetzli/jpeg_data_decoder.cc
+	${GUETZLI_ROOT}/guetzli/jpeg_data_encoder.cc
+	${GUETZLI_ROOT}/guetzli/jpeg_data_reader.cc
+	${GUETZLI_ROOT}/guetzli/jpeg_data_writer.cc
+	${GUETZLI_ROOT}/guetzli/jpeg_huffman_decode.cc
+	${GUETZLI_ROOT}/guetzli/output_image.cc
+	${GUETZLI_ROOT}/guetzli/preprocess_downsample.cc
+	${GUETZLI_ROOT}/guetzli/processor.cc
+	${GUETZLI_ROOT}/guetzli/quality.cc
+	${GUETZLI_ROOT}/guetzli/quantize.cc
+	${GUETZLI_ROOT}/guetzli/score.cc
+	${GUETZLI_ROOT}/third_party/butteraugli/butteraugli/butteraugli.cc
+	${GUETZLI_ROOT}/third_party/butteraugli/butteraugli/butteraugli_main.cc
+)
+
+add_library(guetzli
+        STATIC
+        ${GUETZLI_SRC}
+)
+set(PNG_ROOT
+        ${GUETZLI_ROOT}/third_party/png
+)
+
+set(JPEG_ROOT
+        ${GUETZLI_ROOT}/third_party/jpeg
+)
+set(ZLIB_ROOT
+        ${GUETZLI_ROOT}/third_party/zlib
+)
+include_directories(AFTER
+        ${PNG_ROOT}
+        ${JPEG_ROOT}
+        ${ZLIB_ROOT}
+)
+set(PNG_SRC
+    ${PNG_ROOT}/png.c
+    ${PNG_ROOT}/pngerror.c
+    ${PNG_ROOT}/pngget.c
+    ${PNG_ROOT}/pngmem.c
+    ${PNG_ROOT}/pngpread.c
+    ${PNG_ROOT}/pngread.c
+    ${PNG_ROOT}/pngrio.c
+    ${PNG_ROOT}/pngrtran.c
+    ${PNG_ROOT}/pngrutil.c
+    ${PNG_ROOT}/pngset.c
+    ${PNG_ROOT}/pngtrans.c
+    ${PNG_ROOT}/pngwio.c
+    ${PNG_ROOT}/pngwrite.c
+    ${PNG_ROOT}/pngwtran.c
+    ${PNG_ROOT}/pngwutil.c
+)
+
+set(JPEG_SRC
+            ${JPEG_ROOT}/cderror.h
+            ${JPEG_ROOT}/cdjpeg.h
+            ${JPEG_ROOT}/jaricom.c
+            ${JPEG_ROOT}/jcapimin.c
+            ${JPEG_ROOT}/jcapistd.c
+            ${JPEG_ROOT}/jccoefct.c
+            ${JPEG_ROOT}/jccolor.c
+            ${JPEG_ROOT}/jcdctmgr.c
+            ${JPEG_ROOT}/jchuff.c
+            ${JPEG_ROOT}/jcinit.c
+            ${JPEG_ROOT}/jcmainct.c
+            ${JPEG_ROOT}/jcmarker.c
+            ${JPEG_ROOT}/jcmaster.c
+            ${JPEG_ROOT}/jcomapi.c
+            ${JPEG_ROOT}/jconfig.h
+            ${JPEG_ROOT}/jcparam.c
+            ${JPEG_ROOT}/jcprepct.c
+            ${JPEG_ROOT}/jcsample.c
+            ${JPEG_ROOT}/jctrans.c
+            ${JPEG_ROOT}/jdapimin.c
+            ${JPEG_ROOT}/jdapistd.c
+            ${JPEG_ROOT}/jdatadst.c
+            ${JPEG_ROOT}/jdatasrc.c
+            ${JPEG_ROOT}/jdcoefct.c
+            ${JPEG_ROOT}/jdcolor.c
+            ${JPEG_ROOT}/jdct.h
+            ${JPEG_ROOT}/jddctmgr.c
+            ${JPEG_ROOT}/jdhuff.c
+            ${JPEG_ROOT}/jdinput.c
+            ${JPEG_ROOT}/jdmainct.c
+            ${JPEG_ROOT}/jdmarker.c
+            ${JPEG_ROOT}/jdmaster.c
+            ${JPEG_ROOT}/jdmerge.c
+            ${JPEG_ROOT}/jdpostct.c
+            ${JPEG_ROOT}/jdsample.c
+            ${JPEG_ROOT}/jdtrans.c
+            ${JPEG_ROOT}/jerror.c
+            ${JPEG_ROOT}/jfdctflt.c
+            ${JPEG_ROOT}/jfdctfst.c
+            ${JPEG_ROOT}/jfdctint.c
+            ${JPEG_ROOT}/jidctflt.c
+            ${JPEG_ROOT}/jidctfst.c
+            ${JPEG_ROOT}/jidctint.c
+            ${JPEG_ROOT}/jinclude.h
+            ${JPEG_ROOT}/jmemmgr.c
+            ${JPEG_ROOT}/jmemnobs.c
+            ${JPEG_ROOT}/jmemsys.h
+            ${JPEG_ROOT}/jmorecfg.h
+            ${JPEG_ROOT}/jquant1.c
+            ${JPEG_ROOT}/jquant2.c
+            ${JPEG_ROOT}/jutils.c
+            ${JPEG_ROOT}/jversion.h
+            ${JPEG_ROOT}/transupp.h
+)
+
+set(ZLIB_SRC
+   ${ZLIB_ROOT}/adler32.c
+           ${ZLIB_ROOT}/compress.c
+           ${ZLIB_ROOT}/crc32.c
+           ${ZLIB_ROOT}/crc32.h
+           ${ZLIB_ROOT}/deflate.c
+           ${ZLIB_ROOT}/deflate.h
+           ${ZLIB_ROOT}/gzclose.c
+           ${ZLIB_ROOT}/gzguts.h
+           ${ZLIB_ROOT}/gzlib.c
+           ${ZLIB_ROOT}/gzread.c
+           ${ZLIB_ROOT}/gzwrite.c
+           ${ZLIB_ROOT}/infback.c
+           ${ZLIB_ROOT}/inffast.c
+           ${ZLIB_ROOT}/inffast.h
+           ${ZLIB_ROOT}/inffixed.h
+           ${ZLIB_ROOT}/inflate.c
+           ${ZLIB_ROOT}/inflate.h
+           ${ZLIB_ROOT}/inftrees.c
+           ${ZLIB_ROOT}/inftrees.h
+           ${ZLIB_ROOT}/trees.c
+           ${ZLIB_ROOT}/trees.h
+           ${ZLIB_ROOT}/uncompr.c
+           ${ZLIB_ROOT}/zconf.h
+           ${ZLIB_ROOT}/zutil.c
+           ${ZLIB_ROOT}/zutil.h
+)
+
+add_library(png
+        STATIC
+        ${PNG_SRC}
+)
+add_library(jpeg
+        STATIC
+        ${JPEG_SRC}
+)
+add_library(zlib
+        STATIC
+        ${ZLIB_SRC}
+)
+find_library(
+              log-lib
+
+              log )
+
+target_link_libraries(
+                       native-lib
+                         guetzli
+                       ${log-lib}
+                        png
+                        jpeg
+                        zlib
+)
